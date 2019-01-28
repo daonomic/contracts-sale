@@ -1,0 +1,30 @@
+{
+  "name": "@daonomic/crowdsale",
+  "version": "0.1.0",
+  "description": "Crowdsale contracts for Daonomic platform",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daonomic/crowdsale.git"
+  },
+  "keywords": [
+    "ethereum"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daonomic/crowdsale/issues"
+  },
+  "homepage": "https://github.com/daonomic/crowdsale",
+  "dependencies": {
+    "openzeppelin-solidity": "2.1.2"
+  },
+  "devDependencies": {
+    "@daonomic/tests-common": "~0.2"
+  }
+}
