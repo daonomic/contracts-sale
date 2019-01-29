@@ -1,7 +1,10 @@
 pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
+
 
 import "./Sale.sol";
 import "./UiEvents.sol";
+
 
 contract RatesChangingSale is UiEvents, Sale {
     mapping(address => uint) public rates;
