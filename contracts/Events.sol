@@ -15,7 +15,7 @@ contract Events {
         OTHER
     }
 
-    event Purchase(address indexed beneficiary, address token, uint256 paid, uint256 purchased);
+    event Purchase(address indexed beneficiary, address token, uint256 paid, uint256 purchased, uint256 bonus);
 
     event Bonus(address indexed beneficiary, uint256 amount, BonusType bonusType);
 }

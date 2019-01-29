@@ -44,11 +44,12 @@ contract Sale is Ownable, Events {
      */
     function _purchase(address _beneficiary, address _token, uint _value) internal {
         _preValidatePurchase(_beneficiary, _token, _value);
-        (uint amount, ) = _getAmount(_beneficiary, _token, _value);
-        _deliver(_beneficiary, amount);
-        emit Purchase(_beneficiary, _token, _value, amount);
-        _updateState(_beneficiary, _token, _value, amount);
-        _postValidatePurchase(_beneficiary, _token, _value, amount);
+        (uint purchased, ) = _getPurchasedAmount(_beneficiary, _token, _value);
+        uint bonus = _getBonus(_beneficiary, purchased);
+        _deliver(_beneficiary, purchased + bonus);
+        emit Purchase(_beneficiary, _token, _value, purchased, bonus);
+        _updateState(_beneficiary, _token, _value, purchased, bonus);
+        _postValidatePurchase(_beneficiary, _token, _value, purchased, bonus);
     }
 
     function _preValidatePurchase(address _beneficiary, address /*_token*/, uint _value) view internal {
@@ -56,15 +57,19 @@ contract Sale is Ownable, Events {
         require(_value != 0);
     }
 
-    function _getAmount(address _beneficiary, address _token, uint _value) internal returns (uint amount, uint change);
+    function _getPurchasedAmount(address _beneficiary, address _token, uint _value) internal returns (uint amount, uint change);
+
+    function _getBonus(address _beneficiary, uint _amount) internal returns (uint) {
+        return 0;
+    }
 
     function _deliver(address _beneficiary, uint _amount) internal;
 
-    function _updateState(address _beneficiary, address _token, uint _value, uint _amount) internal {
+    function _updateState(address _beneficiary, address _token, uint _value, uint _purchased, uint _bonus) internal {
 
     }
 
-    function _postValidatePurchase(address _beneficiary, address _token, uint _value, uint _amount) internal {
+    function _postValidatePurchase(address _beneficiary, address _token, uint _value, uint _purchased, uint _bonus) internal {
 
     }
 

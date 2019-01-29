@@ -10,7 +10,7 @@ contract SimpleReferralBonusSale is WhitelistReferralBonusSale, MintingSale {
 
     }
 
-    function _getPurchasedAmount(address _token, uint _value) internal returns (uint amount, uint change) {
+    function _getPurchasedAmount(address _beneficiary, address _token, uint _value) internal returns (uint amount, uint change) {
         require(_token == address(0), "only eth payments accepted");
         return (_value * 10, 0);
     }

@@ -3,10 +3,15 @@ pragma solidity ^0.5.0;
 import "./Sale.sol";
 import "./UiEvents.sol";
 
-contract RatesSale is UiEvents, Sale {
+contract RatesChangingSale is UiEvents, Sale {
     mapping(address => uint) public rates;
 
-    function _getAmount(address _beneficiary, address _token, uint _value) internal returns (uint amount, uint change) {
+    struct Rate {
+        address token;
+        uint256 rate;
+    }
+
+    function _getPurchasedAmount(address _beneficiary, address _token, uint _value) internal returns (uint amount, uint change) {
         uint rate = rates[_token];
         require(rate != 0, "Rate is not set");
         return (_value.mul(rate), 0);
@@ -23,5 +28,11 @@ contract RatesSale is UiEvents, Sale {
             emit RateAdd(_token);
         }
         rates[_token] = _rate;
+    }
+
+    function setRates(Rate[] memory _rates) onlyOwner public {
+        for (uint i = 0; i < _rates.length; i++) {
+            setRate(_rates[i].token, _rates[i].rate);
+        }
     }
 }
