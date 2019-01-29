@@ -4,7 +4,6 @@ const util = require('util');
 
 const tests = require("@daonomic/tests-common");
 const expectThrow = tests.expectThrow;
-const awaitEvent = tests.awaitEvent;
 const randomAddress = tests.randomAddress;
 const verifyBalanceChange = tests.verifyBalanceChange;
 const increaseTime = tests.increaseTime;

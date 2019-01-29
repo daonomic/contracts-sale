@@ -18,7 +18,7 @@ import "./Events.sol";
  * behavior.
  * This contract is based on openzeppeling Crowdsale contract
  */
-//todo change, btc, one-time
+//todo change
 contract Sale is Ownable, Events {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
