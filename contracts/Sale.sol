@@ -6,8 +6,8 @@ import "openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol";
 import "./Events.sol";
 
 /**
- * @title Crowdsale
- * @dev Crowdsale is a base contract for managing a crowdsale,
+ * @title Sale
+ * @dev Sale is a base contract for managing a crowdsale,
  * allowing investors to purchase with ether or other payment methods (ERC-20 tokens or BTC etc.)
  * This contract implements such functionality in its most fundamental form and can be extended
  * to provide additional functionality and/or custom behavior.
@@ -18,8 +18,8 @@ import "./Events.sol";
  * behavior.
  * This contract is based on openzeppeling Crowdsale contract
  */
-//todo change, erc-20, btc, one-time
-contract Crowdsale is Ownable, Events {
+//todo change, btc, one-time
+contract Sale is Ownable, Events {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 

@@ -1,8 +1,8 @@
 pragma solidity ^0.5.0;
 
-import "./Crowdsale.sol";
+import "./Sale.sol";
 
-contract RatesCrowdsale is Crowdsale {
+contract RatesSale is Sale {
     mapping(address => uint) public rates;
 
     function _getAmount(address _beneficiary, address _token, uint _value) internal returns (uint amount, uint change) {

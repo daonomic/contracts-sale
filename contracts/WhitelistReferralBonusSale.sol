@@ -1,10 +1,10 @@
 pragma solidity ^0.5.0;
 
 import "./ReferrerProvider.sol";
-import "./BonusCrowdsale.sol";
+import "./BonusSale.sol";
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 
-contract WhitelistReferralBonusCrowdsale is ReferrerProvider, BonusCrowdsale {
+contract WhitelistReferralBonusSale is ReferrerProvider, BonusSale {
 
     uint public referrerBonus;
     uint public refereeBonus;

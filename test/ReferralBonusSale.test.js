@@ -1,4 +1,4 @@
-const Sale = artifacts.require("SimpleReferralBonusCrowdsale.sol");
+const Sale = artifacts.require("SimpleReferralBonusSale.sol");
 const Token = artifacts.require("ERC20Mintable.sol");
 const util = require('util');
 

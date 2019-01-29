@@ -1,4 +1,4 @@
-const Sale = artifacts.require("SimpleMintableTokenCrowdsale.sol");
+const Sale = artifacts.require("SimpleMintableTokenSale.sol");
 const Token = artifacts.require("ERC20Mintable.sol");
 const util = require('util');
 
