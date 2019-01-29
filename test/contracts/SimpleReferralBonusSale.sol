@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20Mintable.sol";
 import "../../contracts/WhitelistReferralBonusSale.sol";
-import "../../contracts/MintingTokenSale.sol";
+import "../../contracts/MintingSale.sol";
 
 contract SimpleReferralBonusSale is WhitelistReferralBonusSale, MintingSale {
 

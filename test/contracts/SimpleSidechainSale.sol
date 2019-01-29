@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 import "../../contracts/SidechainSale.sol";
-import "../../contracts/MintingTokenSale.sol";
+import "../../contracts/MintingSale.sol";
 import "../../contracts/RatesSale.sol";
 
 contract SimpleSidechainSale is SidechainSale, MintingSale, RatesSale {
