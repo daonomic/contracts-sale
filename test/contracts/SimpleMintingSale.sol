@@ -1,10 +1,11 @@
 pragma solidity ^0.5.0;
 
-import "../../contracts/SidechainSale.sol";
+
 import "../../contracts/MintingTokenSale.sol";
 import "../../contracts/RatesSale.sol";
 
-contract SimpleSidechainSale is SidechainSale, MintingSale, RatesSale {
+
+contract SimpleMintingSale is MintingSale, RatesSale {
 
     constructor(ERC20Mintable _token) MintingSale(_token) public {
 
