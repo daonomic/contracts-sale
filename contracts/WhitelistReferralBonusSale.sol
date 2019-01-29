@@ -4,7 +4,7 @@ import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./ReferrerProvider.sol";
 import "./Sale.sol";
 
-contract WhitelistReferralBonusSale is ReferrerProvider, Sale {
+contract WhitelistReferralBonusSale is ReferrerProviderImpl, Sale {
 
     uint public referrerBonus;
     uint public refereeBonus;

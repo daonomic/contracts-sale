@@ -2,7 +2,11 @@ pragma solidity ^0.5.0;
 
 import "openzeppelin-solidity/contracts/access/roles/WhitelistAdminRole.sol";
 
-contract ReferrerProvider is WhitelistAdminRole {
+contract ReferrerProvider {
+    function getReferrer(address _address) public view returns (address referrer);
+}
+
+contract ReferrerProviderImpl is ReferrerProvider, WhitelistAdminRole {
     mapping(address => address) public referrers;
 
     function getReferrer(address _address) public view returns (address referrer) {
