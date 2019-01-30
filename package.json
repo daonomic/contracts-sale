@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/daonomic/crowdsale.git"
+    "url": "git+https://github.com/daonomic/contracts-sale.git"
   },
   "keywords": [
     "ethereum"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/daonomic/crowdsale/issues"
+    "url": "https://github.com/daonomic/contracts-sale/issues"
   },
-  "homepage": "https://github.com/daonomic/crowdsale",
+  "homepage": "https://github.com/daonomic/contracts-sale",
   "dependencies": {
     "openzeppelin-solidity": "2.1.2"
   },
