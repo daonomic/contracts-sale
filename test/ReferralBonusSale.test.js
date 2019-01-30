@@ -17,6 +17,7 @@ contract('ReferralBonusCrowdsale', accounts => {
     sale = await Sale.new(token.address, 100, 50);
 
     await token.addMinter(sale.address);
+    await sale.addWhitelistAdmin(accounts[0]);
   });
 
   it("should not sell if not whitelisted", async () => {

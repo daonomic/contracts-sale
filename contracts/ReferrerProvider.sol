@@ -1,6 +1,8 @@
 pragma solidity ^0.5.0;
 
-import "openzeppelin-solidity/contracts/access/roles/WhitelistAdminRole.sol";
+
+import "@daonomic/lib/contracts/roles/WhitelistAdminRole.sol";
+
 
 contract ReferrerProvider {
     function getReferrer(address _address) public view returns (address referrer);

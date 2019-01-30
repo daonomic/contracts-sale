@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
+import "@daonomic/lib/contracts/roles/OperatorRole.sol";
 import "./Sale.sol";
-import "./roles/OperatorRole.sol";
 import "./UiEvents.sol";
 
 contract SidechainSale is UiEvents, OperatorRole, Sale {

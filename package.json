@@ -1,6 +1,6 @@
 {
   "name": "@daonomic/sale",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Sale contracts for Daonomic platform",
   "main": "truffle.js",
   "directories": {
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/daonomic/contracts-sale",
   "dependencies": {
+    "@daonomic/lib": "^0.1.0",
     "openzeppelin-solidity": "2.1.2"
   },
   "devDependencies": {

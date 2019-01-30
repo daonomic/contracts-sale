@@ -1,8 +1,10 @@
 pragma solidity ^0.5.0;
 
+
+import "@daonomic/lib/contracts/roles/SignerRole.sol";
 import "./Sale.sol";
-import "openzeppelin-solidity/contracts/access/roles/SignerRole.sol";
 import "./UiEvents.sol";
+
 
 contract OneTimeAddressSale is UiEvents, SignerRole, Sale {
 

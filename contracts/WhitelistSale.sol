@@ -1,9 +1,11 @@
 pragma solidity ^0.5.0;
 
-import "./Sale.sol";
-import "openzeppelin-solidity/contracts/access/roles/WhitelistedRole.sol";
 
-contract WhitelistSale is WhitelistedRole, Sale {
+import "./WhitelistImpl.sol";
+import "./Sale.sol";
+
+
+contract WhitelistSale is WhitelistImpl, Sale {
 
     function _preValidatePurchase(address _beneficiary, address _token, uint _value) view internal {
         super._preValidatePurchase(_beneficiary, _token, _value);
