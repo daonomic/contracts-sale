@@ -8,6 +8,13 @@ import "./Whitelist.sol";
 contract WhitelistImpl is WhitelistAdminRole, Whitelist {
     mapping(address => bool) public whitelist;
 
+    event KycProviderCreated(address account);
+    event InvestorCheck(address addr);
+
+    constructor() public {
+        emit KycProviderCreated(address(this));
+    }
+
     function isWhitelisted(address account) public view returns (bool) {
         return whitelist[account];
     }
@@ -28,7 +35,12 @@ contract WhitelistImpl is WhitelistAdminRole, Whitelist {
         _setWhitelisted(account, whitelisted);
     }
 
+    function setWhitelist(address account, bool whitelisted) public onlyOwner {
+        _setWhitelisted(account, whitelisted);
+    }
+
     function _setWhitelisted(address account, bool whitelisted) internal {
         whitelist[account] = whitelisted;
+        emit InvestorCheck(account);
     }
 }
