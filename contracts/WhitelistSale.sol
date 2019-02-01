@@ -5,10 +5,12 @@ import "./WhitelistImpl.sol";
 import "./Sale.sol";
 
 
-contract WhitelistSale is WhitelistImpl, Sale {
+contract WhitelistSale is Sale {
+
+    function _isWhitelisted(address account) internal view returns (bool);
 
     function _preValidatePurchase(address _beneficiary, address _token, uint _value) view internal {
         super._preValidatePurchase(_beneficiary, _token, _value);
-        require(isWhitelisted(_beneficiary));
+        require(_isWhitelisted(_beneficiary));
     }
 }

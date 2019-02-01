@@ -2,8 +2,9 @@ pragma solidity ^0.5.0;
 
 import "./Sale.sol";
 import "./Whitelist.sol";
+import "./WhitelistSale.sol";
 
-contract ExternalWhitelistSale is Sale {
+contract ExternalWhitelistSale is WhitelistSale {
 
     Whitelist public whitelist;
 
@@ -11,9 +12,8 @@ contract ExternalWhitelistSale is Sale {
         whitelist = _whitelist;
     }
 
-    function _preValidatePurchase(address _beneficiary, address _token, uint _value) view internal {
-        super._preValidatePurchase(_beneficiary, _token, _value);
-        require(whitelist.isWhitelisted(_beneficiary));
+    function _isWhitelisted(address account) internal view returns (bool) {
+        return whitelist.isWhitelisted(account);
     }
 
     function setWhitelist(Whitelist _whitelist) public onlyOwner {

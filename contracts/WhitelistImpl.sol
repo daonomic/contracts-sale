@@ -9,7 +9,6 @@ contract WhitelistImpl is WhitelistAdminRole, Whitelist {
     mapping(address => bool) public whitelist;
 
     event KycProviderCreated(address account);
-    event InvestorCheck(address addr);
 
     constructor() public {
         emit KycProviderCreated(address(this));
@@ -41,6 +40,6 @@ contract WhitelistImpl is WhitelistAdminRole, Whitelist {
 
     function _setWhitelisted(address account, bool whitelisted) internal {
         whitelist[account] = whitelisted;
-        emit InvestorCheck(account);
+        emit WhitelistChangeEvent(account, whitelisted);
     }
 }

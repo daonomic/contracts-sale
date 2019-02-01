@@ -9,8 +9,15 @@ contract ReferralBonusSale is ReferrerProviderImpl, Sale {
     uint public referrerBonus;
     uint public refereeBonus;
 
+    constructor(uint _referrerBonus, uint _refereeBonus) public {
+        referrerBonus = _referrerBonus;
+        refereeBonus = _refereeBonus;
+    }
+
+    function _getReferrer(address account) internal view returns (address referrer);
+
     function _getBonus(address _beneficiary, uint _amount) internal returns (uint) {
-        address referrer = getReferrer(_beneficiary);
+        address referrer = _getReferrer(_beneficiary);
         if (referrer != address(0) && referrer != address(1)) {
             uint realReferrerBonus = _amount.mul(referrerBonus).div(1000);
             emit Bonus(referrer, realReferrerBonus, BonusType.REFERRER);
@@ -21,5 +28,13 @@ contract ReferralBonusSale is ReferrerProviderImpl, Sale {
         } else {
             return 0;
         }
+    }
+
+    function setReferrerBonus(uint _referrerBonus) public onlyOwner {
+        referrerBonus = _referrerBonus;
+    }
+
+    function setRefereeBonus(uint _refereeBonus) public onlyOwner {
+        refereeBonus = _refereeBonus;
     }
 }
