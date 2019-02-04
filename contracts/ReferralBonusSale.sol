@@ -21,9 +21,10 @@ contract ReferralBonusSale is Sale {
         if (referrer != address(0) && referrer != address(1)) {
             uint realReferrerBonus = _amount.mul(referrerBonus).div(1000);
             emit Bonus(referrer, realReferrerBonus, BonusType.REFERRER);
+            _deliver(referrer, realReferrerBonus);
+
             uint realRefereeBonus = _amount.mul(refereeBonus).div(1000);
             emit Bonus(_beneficiary, realRefereeBonus, BonusType.REFEREE);
-            _deliver(referrer, realReferrerBonus);
             return realRefereeBonus;
         } else {
             return 0;
