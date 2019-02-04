@@ -19,4 +19,10 @@ contract ExternalWhitelistSale is WhitelistSale {
     function setWhitelist(Whitelist _whitelist) public onlyOwner {
         whitelist = _whitelist;
     }
+
+    function getWhitelists() public view returns (address[] memory) {
+        address[] memory result = new address[](1);
+        result[0] = address(whitelist);
+        return result;
+    }
 }

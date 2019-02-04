@@ -14,4 +14,10 @@ contract ExternalReferralBonusSale is ReferralBonusSale {
     function _getReferrer(address account) internal view returns (address) {
         return referrerProvider.getReferrer(account);
     }
+
+    function getWhitelists() public view returns (address[] memory) {
+        address[] memory result = new address[](1);
+        result[0] = address(referrerProvider);
+        return result;
+    }
 }

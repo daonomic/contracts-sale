@@ -7,6 +7,8 @@ import "./Sale.sol";
 
 contract WhitelistSale is Sale {
 
+    function getWhitelists() public view returns (address[] memory);
+
     function _isWhitelisted(address account) internal view returns (bool);
 
     function _preValidatePurchase(address _beneficiary, address _token, uint _value) view internal {

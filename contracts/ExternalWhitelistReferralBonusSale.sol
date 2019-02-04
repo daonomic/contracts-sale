@@ -21,4 +21,10 @@ contract ExternalWhitelistReferralBonusSale is WhitelistSale, ReferralBonusSale 
     function _isWhitelisted(address account) internal view returns (bool) {
         return referrerProvider.isWhitelisted(account);
     }
+
+    function getWhitelists() public view returns (address[] memory) {
+        address[] memory result = new address[](1);
+        result[0] = address(referrerProvider);
+        return result;
+    }
 }
