@@ -12,23 +12,23 @@ contract WhitelistImpl is WhitelistAdminRole, Whitelist {
         return whitelist[account];
     }
 
-    function addToWhitelist(address[] memory accounts) public onlyOwner {
+    function addToWhitelist(address[] memory accounts) public onlyWhitelistAdmin {
         for(uint i = 0; i < accounts.length; i++) {
             _setWhitelisted(accounts[i], true);
         }
     }
 
-    function removeFromWhitelist(address[] memory accounts) public onlyOwner {
+    function removeFromWhitelist(address[] memory accounts) public onlyWhitelistAdmin {
         for(uint i = 0; i < accounts.length; i++) {
             _setWhitelisted(accounts[i], false);
         }
     }
 
-    function setWhitelisted(address account, bool whitelisted) public onlyOwner {
+    function setWhitelisted(address account, bool whitelisted) public onlyWhitelistAdmin {
         _setWhitelisted(account, whitelisted);
     }
 
-    function setWhitelist(address account, bool whitelisted) public onlyOwner {
+    function setWhitelist(address account, bool whitelisted) public onlyWhitelistAdmin {
         _setWhitelisted(account, whitelisted);
     }
 
