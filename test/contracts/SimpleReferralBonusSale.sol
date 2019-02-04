@@ -2,12 +2,11 @@ pragma solidity ^0.5.0;
 
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20Mintable.sol";
 import "../../contracts/MintingSale.sol";
-import "../../contracts/WhitelistSale.sol";
-import "../../contracts/ReferralBonusSale.sol";
+import "../../contracts/InternalWhitelistReferralBonusSale.sol";
 
-contract SimpleReferralBonusSale is ReferrerProviderImpl, WhitelistSale, ReferralBonusSale, MintingSale {
+contract SimpleReferralBonusSale is InternalWhitelistReferralBonusSale, MintingSale {
 
-    constructor(ERC20Mintable _token, uint _referrerBonus, uint _refereeBonus) ReferralBonusSale(_referrerBonus, _refereeBonus) MintingSale(_token) public {
+    constructor(ERC20Mintable _token, uint _referrerBonus, uint _refereeBonus) InternalWhitelistReferralBonusSale(_referrerBonus, _refereeBonus) MintingSale(_token) public {
 
     }
 
