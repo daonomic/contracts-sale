@@ -34,6 +34,6 @@ contract WhitelistImpl is WhitelistAdminRole, Whitelist {
 
     function _setWhitelisted(address account, bool whitelisted) internal {
         whitelist[account] = whitelisted;
-        emit WhitelistChangeEvent(account, whitelisted);
+        emit WhitelistChange(account, whitelisted);
     }
 }

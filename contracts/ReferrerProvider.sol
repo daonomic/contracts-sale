@@ -6,11 +6,11 @@ import "./Whitelist.sol";
 
 
 contract ReferrerProvider is Whitelist {
-    event ReferrerProviderCreatedEvent(address account);
-    event ReferrerChangeEvent(address account, address referrer);
+    event ReferrerProviderCreated(address account);
+    event ReferrerChange(address account, address referrer);
 
     constructor() public {
-        emit ReferrerProviderCreatedEvent(address(this));
+        emit ReferrerProviderCreated(address(this));
     }
 
     function getReferrer(address account) public view returns (address referrer);
@@ -29,7 +29,7 @@ contract ReferrerProviderImpl is ReferrerProvider, WhitelistAdminRole {
 
     function setReferrer(address _address, address _referrer) public onlyWhitelistAdmin {
         referrers[_address] = _referrer;
-        emit WhitelistChangeEvent(_address, _referrer != address(0));
-        emit ReferrerChangeEvent(_address, _referrer);
+        emit WhitelistChange(_address, _referrer != address(0));
+        emit ReferrerChange(_address, _referrer);
     }
 }
