@@ -22,11 +22,4 @@ contract SimpleReferralBonusSale is InternalWhitelistReferralBonusSale, MintingS
     function _isWhitelisted(address account) internal view returns (bool) {
         return isWhitelisted(account);
     }
-
-    function setReferrer(address _address, address _referrer) public onlyWhitelistAdmin {
-        if (_referrer != address(0) && _referrer != address(1)) {
-            require(getReferrer(_referrer) != address(0));
-        }
-        referrers[_address] = _referrer;
-    }
 }

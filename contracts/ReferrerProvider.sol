@@ -28,6 +28,10 @@ contract ReferrerProviderImpl is ReferrerProvider, WhitelistAdminRole {
     }
 
     function setReferrer(address _address, address _referrer) public onlyWhitelistAdmin {
+        _setReferrer(_address, _referrer);
+    }
+
+    function _setReferrer(address _address, address _referrer) internal {
         referrers[_address] = _referrer;
         emit WhitelistChange(_address, _referrer != address(0));
         emit ReferrerChange(_address, _referrer);

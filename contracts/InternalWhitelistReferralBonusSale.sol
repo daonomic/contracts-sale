@@ -24,7 +24,7 @@ contract InternalWhitelistReferralBonusSale is ReferrerProviderImpl, WhitelistSa
         if (_referrer != address(0) && _referrer != address(1)) {
             require(getReferrer(_referrer) != address(0));
         }
-        referrers[_address] = _referrer;
+        _setReferrer(_address, _referrer);
     }
 
     function getWhitelists() public view returns (address[] memory) {
