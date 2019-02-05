@@ -27,7 +27,8 @@ contract('ReferralBonusCrowdsale', accounts => {
   });
 
   it("should sell if whitelisted", async () => {
-    await sale.setReferrer(accounts[1], "0x0000000000000000000000000000000000000001");
+    var tx = await sale.setReferrer(accounts[1], "0x0000000000000000000000000000000000000001");
+    assert(tests.findLog(tx, "WhitelistChange") != null);
     var tx = await sale.sendTransaction({value: 100, from: accounts[1]});
     console.log(tx.receipt.gasUsed);
     var purchase = tests.findLog(tx, "Purchase");
