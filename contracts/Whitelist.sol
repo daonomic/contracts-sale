@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 contract Whitelist {
     event WhitelistCreated(address account);
-    event WhitelistChange(address account, bool allowed);
+    event WhitelistChange(address indexed account, bool allowed);
 
     constructor() public {
         emit WhitelistCreated(address(this));

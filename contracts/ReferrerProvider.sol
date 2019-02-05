@@ -7,7 +7,7 @@ import "./Whitelist.sol";
 
 contract ReferrerProvider is Whitelist {
     event ReferrerProviderCreated(address account);
-    event ReferrerChange(address account, address referrer);
+    event ReferrerChange(address indexed account, address referrer);
 
     constructor() public {
         emit ReferrerProviderCreated(address(this));
