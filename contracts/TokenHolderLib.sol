@@ -10,9 +10,10 @@ library TokenHolderLib {
     }
 
     function release(Holder storage self) public {
+        require(msg.sender == self.beneficiary);
         require(block.timestamp >= self.releaseTime);
         uint amount = self.token.balanceOf(address(this));
         require(amount > 0);
-        self.token.transfer(self.beneficiary, amount);
+        self.token.transfer(msg.sender, amount);
     }
 }

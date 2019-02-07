@@ -4,7 +4,6 @@ pragma solidity ^0.5.0;
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20Mintable.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./TokenHolder.sol";
-import "openzeppelin-solidity/contracts/token/ERC20/TokenTimelock.sol";
 
 
 contract Pools is Ownable {
@@ -67,7 +66,7 @@ contract Pools is Ownable {
         if (now >= releaseTime) {
             require(token.mint(_beneficiary, _amount));
         } else {
-            TokenTimelock created = new TokenTimelock(token, _beneficiary, releaseTime);
+            TokenHolder created = new TokenHolder(token, _beneficiary, releaseTime);
             require(token.mint(address(created), _amount));
             emit TokenHolderCreatedEvent(_name, address(created), _amount);
         }

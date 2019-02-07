@@ -1,6 +1,7 @@
 const Pools = artifacts.require("SimplePools.sol");
 const Token = artifacts.require("ERC20Mintable.sol");
 const TokenHolder = artifacts.require("TokenHolder.sol");
+const Lib = artifacts.require("TokenHolderLib.sol");
 const util = require('util');
 
 const tests = require("@daonomic/tests-common");
@@ -13,9 +14,12 @@ const sleep = require('sleep-promise');
 contract('Pools', accounts => {
   let token;
   let pools;
+  let lib;
 
   beforeEach(async () => {
     token = await Token.new();
+    lib = await Lib.new();
+    await Pools.link("TokenHolderLib", lib.address);
   });
 
   it("should make direct transfer when using direct pool", async () => {

@@ -12,8 +12,6 @@ import "./TokenHolderLib.sol";
 contract TokenHolder {
     using TokenHolderLib for TokenHolderLib.Holder;
 
-    event Released(uint amount);
-
     TokenHolderLib.Holder private holder;
 
     constructor(IERC20 token, address beneficiary, uint256 releaseTime) public {
