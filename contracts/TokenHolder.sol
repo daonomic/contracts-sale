@@ -1,41 +1,29 @@
 pragma solidity ^0.5.0;
 
 
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
-import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
+import "./TokenHolderLib.sol";
 
 
 /**
- * @title Token Holder with vesting period
- * @dev holds any amount of tokens and allows to release all tokens at start time
+ * @title TokenHolder
+ * @dev TokenHolder is a token holder contract that will allow a
+ * beneficiary to extract the tokens after a given release time
  */
-contract TokenHolder is Ownable {
+contract TokenHolder {
+    using TokenHolderLib for TokenHolderLib.Holder;
+
     event Released(uint amount);
 
-    /**
-     * @dev start of the vesting period
-     */
-    uint public start;
-    /**
-     * @dev holding token
-     */
-    IERC20 public token;
+    TokenHolderLib.Holder private holder;
 
-    constructor(uint _start, IERC20 _token) public {
-        start = _start;
-        token = _token;
+    constructor(IERC20 token, address beneficiary, uint256 releaseTime) public {
+        holder = TokenHolderLib.Holder(token, beneficiary, releaseTime);
     }
 
     /**
-     * @dev transfers vested tokens to beneficiary (to the owner of the contract)
-     * @dev automatically calculates amount to release
+     * @notice Transfers tokens held by timelock to beneficiary.
      */
-    function release() onlyOwner public {
-        require(now >= start);
-
-        uint amount = token.balanceOf(address(this));
-        require(amount > 0);
-        require(token.transfer(msg.sender, amount));
-        emit Released(amount);
+    function release() public {
+        holder.release();
     }
 }

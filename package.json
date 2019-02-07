@@ -26,6 +26,7 @@
     "openzeppelin-solidity": "2.1.2"
   },
   "devDependencies": {
-    "@daonomic/tests-common": "~0.2"
+    "@daonomic/tests-common": "~0.2",
+    "sleep-promise": "^8.0.1"
   }
 }

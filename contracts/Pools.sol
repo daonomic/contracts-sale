@@ -4,14 +4,15 @@ pragma solidity ^0.5.0;
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20Mintable.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./TokenHolder.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/TokenTimelock.sol";
 
 
 contract Pools is Ownable {
     using SafeMath for uint256;
 
-    enum StartType { Fixed, Floating, Direct }
+    enum ReleaseType { Fixed, Floating, Direct }
 
-    event PoolCreatedEvent(string name, uint maxAmount, uint start, StartType startType);
+    event PoolCreatedEvent(string name, uint maxAmount, uint releaseTime, ReleaseType releaseType);
     event TokenHolderCreatedEvent(string name, address addr, uint amount);
 
     ERC20Mintable public token;
@@ -27,29 +28,29 @@ contract Pools is Ownable {
          */
         uint releasedAmount;
         /**
-         * @dev start of the vesting period
+         * @dev release time
          */
-        uint start;
+        uint releaseTime;
         /**
-         * @dev start type of the holder (fixed - date is set in seconds since 01.01.1970, floating - date is set in seconds since holder creation)
+         * @dev release type of the holder (fixed - date is set in seconds since 01.01.1970, floating - date is set in seconds since holder creation. direct - tokens are transferred to beneficiary immediately)
          */
-        StartType startType;
+        ReleaseType releaseType;
     }
 
     constructor(ERC20Mintable _token) public {
         token = _token;
     }
 
-    function registerPool(string memory _name, uint _maxAmount, uint _start, StartType _startType) internal {
+    function registerPool(string memory _name, uint _maxAmount, uint _releaseTime, ReleaseType _releaseType) internal {
         require(_maxAmount > 0, "maxAmount should be greater than 0");
-        if (_startType == StartType.Direct) {
-            require(_start == 0, "start time should be 0 for Direct StartType");
+        if (_releaseType == ReleaseType.Direct) {
+            require(_releaseTime == 0, "release time should be 0 for ReleaseType.Direct");
         }
-        if (_start == 0) {
-            require(_startType == StartType.Direct, "start time can be 0 only for StartType.Direct");
+        if (_releaseTime == 0) {
+            require(_releaseType == ReleaseType.Direct, "release time can be 0 only for ReleaseType.Direct");
         }
-        pools[_name] = PoolDescription(_maxAmount, 0, _start, _startType);
-        emit PoolCreatedEvent(_name, _maxAmount, _start, _startType);
+        pools[_name] = PoolDescription(_maxAmount, 0, _releaseTime, _releaseType);
+        emit PoolCreatedEvent(_name, _maxAmount, _releaseTime, _releaseType);
     }
 
     function createHolder(string memory _name, address _beneficiary, uint _amount) onlyOwner public {
@@ -57,20 +58,23 @@ contract Pools is Ownable {
         require(pool.maxAmount != 0, "pool is not defined");
         require(_amount.add(pool.releasedAmount) <= pool.maxAmount, "pool is depleted");
         pool.releasedAmount = _amount.add(pool.releasedAmount);
-        uint start;
-        if (pool.startType == StartType.Fixed) {
-            start = pool.start;
+        uint releaseTime;
+        if (pool.releaseType == ReleaseType.Fixed) {
+            releaseTime = pool.releaseTime;
         } else {
-            start = now.add(pool.start);
+            releaseTime = now.add(pool.releaseTime);
         }
-        if (now >= start) {
+        if (now >= releaseTime) {
             require(token.mint(_beneficiary, _amount));
         } else {
-            TokenHolder created = new TokenHolder(start, token);
-            created.transferOwnership(_beneficiary);
+            TokenTimelock created = new TokenTimelock(token, _beneficiary, releaseTime);
             require(token.mint(address(created), _amount));
             emit TokenHolderCreatedEvent(_name, address(created), _amount);
         }
+    }
+
+    function release() public {
+
     }
 
     function getTokensLeft(string memory _name) view public returns (uint) {
