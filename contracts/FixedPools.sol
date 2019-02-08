@@ -6,7 +6,7 @@ import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./TokenHolder.sol";
 
 
-contract Pools is Ownable {
+contract FixedPools is Ownable {
     using SafeMath for uint256;
 
     enum ReleaseType { Fixed, Floating, Direct }
@@ -15,6 +15,7 @@ contract Pools is Ownable {
     event TokenHolderCreatedEvent(string name, address addr, uint amount);
 
     ERC20Mintable public token;
+    string[] poolNames;
     mapping(string => PoolDescription) pools;
 
     struct PoolDescription {
@@ -31,10 +32,12 @@ contract Pools is Ownable {
          */
         uint releaseTime;
         /**
-         * @dev release type of the holder (fixed - date is set in seconds since 01.01.1970, floating - date is set in seconds since holder creation. direct - tokens are transferred to beneficiary immediately)
+         * @dev release type of the holder (fixed - date is set in seconds since 01.01.1970, direct - tokens are transferred to beneficiary immediately)
          */
         ReleaseType releaseType;
     }
+
+    mapping(string => mapping(address => uint)) amounts;
 
     constructor(ERC20Mintable _token) public {
         token = _token;
@@ -42,6 +45,7 @@ contract Pools is Ownable {
 
     function registerPool(string memory _name, uint _maxAmount, uint _releaseTime, ReleaseType _releaseType) internal {
         require(_maxAmount > 0, "maxAmount should be greater than 0");
+        require(_releaseType != ReleaseType.Floating, "ReleaseType.Floating is not supported. use Pools instead of FixedPools");
         if (_releaseType == ReleaseType.Direct) {
             require(_releaseTime == 0, "release time should be 0 for ReleaseType.Direct");
         }
@@ -50,6 +54,7 @@ contract Pools is Ownable {
         }
         pools[_name] = PoolDescription(_maxAmount, 0, _releaseTime, _releaseType);
         emit PoolCreatedEvent(_name, _maxAmount, _releaseTime, _releaseType);
+        poolNames.push(_name);
     }
 
     function createHolder(string memory _name, address _beneficiary, uint _amount) onlyOwner public {
@@ -66,14 +71,26 @@ contract Pools is Ownable {
         if (now >= releaseTime) {
             require(token.mint(_beneficiary, _amount));
         } else {
-            TokenHolder created = new TokenHolder(token, _beneficiary, releaseTime);
-            require(token.mint(address(created), _amount));
-            emit TokenHolderCreatedEvent(_name, address(created), _amount);
+            require(token.mint(address(this), _amount));
+            amounts[_name][_beneficiary] += _amount;
+            emit TokenHolderCreatedEvent(_name, address(this), _amount);
         }
     }
 
     function release() public {
-
+        uint amount;
+        for (uint i = 0; i < poolNames.length; i++) {
+            string memory name = poolNames[i];
+            PoolDescription memory pool = pools[name];
+            if (pool.releaseType == ReleaseType.Fixed) {
+                uint poolAmount = amounts[name][msg.sender];
+                if (poolAmount > 0 && pool.releaseTime <= now) {
+                    amount += poolAmount;
+                }
+            }
+        }
+        require(amount > 0);
+        require(token.transfer(msg.sender, amount));
     }
 
     function getTokensLeft(string memory _name) view public returns (uint) {
