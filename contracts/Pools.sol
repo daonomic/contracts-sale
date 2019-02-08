@@ -31,7 +31,7 @@ contract Pools is Ownable {
          */
         uint releaseTime;
         /**
-         * @dev release type of the holder (fixed - date is set in seconds since 01.01.1970, floating - date is set in seconds since holder creation. direct - tokens are transferred to beneficiary immediately)
+         * @dev release type of the holder (fixed - date is set in seconds since 01.01.1970, floating - date is set in seconds since holder creation, direct - tokens are transferred to beneficiary immediately)
          */
         ReleaseType releaseType;
     }
@@ -70,10 +70,6 @@ contract Pools is Ownable {
             require(token.mint(address(created), _amount));
             emit TokenHolderCreatedEvent(_name, address(created), _amount);
         }
-    }
-
-    function release() public {
-
     }
 
     function getTokensLeft(string memory _name) view public returns (uint) {
