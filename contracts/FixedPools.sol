@@ -4,43 +4,18 @@ pragma solidity ^0.5.0;
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20Mintable.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./TokenHolder.sol";
+import "@daonomic/lib/contracts/Minting.sol";
+import "./AbstractPools.sol";
 
 
-contract FixedPools is Ownable {
+contract FixedPools is Ownable, Minting, AbstractPools {
     using SafeMath for uint256;
 
-    enum ReleaseType { Fixed, Floating, Direct }
-
-    event PoolCreatedEvent(string name, uint maxAmount, uint releaseTime, ReleaseType releaseType);
-    event TokenHolderCreatedEvent(string name, address addr, uint amount);
-
-    ERC20Mintable public token;
     string[] poolNames;
     mapping(string => PoolDescription) pools;
-
-    struct PoolDescription {
-        /**
-         * @dev maximal amount of tokens in this pool
-         */
-        uint maxAmount;
-        /**
-         * @dev amount of tokens already released
-         */
-        uint releasedAmount;
-        /**
-         * @dev release time
-         */
-        uint releaseTime;
-        /**
-         * @dev release type of the holder (fixed - date is set in seconds since 01.01.1970, direct - tokens are transferred to beneficiary immediately)
-         */
-        ReleaseType releaseType;
-    }
-
     mapping(string => mapping(address => uint)) amounts;
 
-    constructor(ERC20Mintable _token) public {
-        token = _token;
+    constructor(ERC20Mintable _token) Minting(_token) public {
     }
 
     function registerPool(string memory _name, uint _maxAmount, uint _releaseTime, ReleaseType _releaseType) internal {
