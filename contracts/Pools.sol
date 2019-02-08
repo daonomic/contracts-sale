@@ -3,17 +3,18 @@ pragma solidity ^0.5.0;
 
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20Mintable.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
-import "@daonomic/lib/contracts/Minting.sol";
 import "./TokenHolder.sol";
 import "./AbstractPools.sol";
 
 
-contract Pools is Ownable, Minting, AbstractPools {
+contract Pools is Ownable, AbstractPools {
     using SafeMath for uint256;
 
+    ERC20Mintable public token;
     mapping(string => PoolDescription) pools;
 
-    constructor(ERC20Mintable _token) Minting(_token) public {
+    constructor(ERC20Mintable _token) public {
+        token = _token;
     }
 
     function registerPool(string memory _name, uint _maxAmount, uint _releaseTime, ReleaseType _releaseType) internal {
