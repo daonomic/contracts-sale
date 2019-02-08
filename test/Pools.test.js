@@ -43,7 +43,7 @@ contract('Pools', accounts => {
   });
 
   it("should create holder for floating", async () => {
-    var pools = await Pools.new(token.address, 1, 1);
+    var pools = await Pools.new(token.address, 2, 2);
     await token.addMinter(pools.address);
 
     var tx = await pools.createHolder("Floating", accounts[1], 1000);
@@ -54,7 +54,7 @@ contract('Pools', accounts => {
         holder.release({from: accounts[1]})
     );
 
-    await sleep(1500);
+    await sleep(2000);
     var tx2 = await holder.release({from: accounts[1]});
     console.log(tx2.receipt.gasUsed);
 
