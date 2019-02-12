@@ -6,6 +6,8 @@ import "./UiEvents.sol";
 
 contract SidechainSale is UiEvents, OperatorRole, Sale {
     event XPubChange(address token, string xpub);
+    event Change(address token, uint value);
+
     mapping(address => string) xpubs;
 
     function setXPub(address _token, string memory _xpub) onlyOwner public {
@@ -21,9 +23,16 @@ contract SidechainSale is UiEvents, OperatorRole, Sale {
         return xpubs[token];
     }
 
-    function onReceive(address _buyer, address _token, uint256 _value, bytes memory _txId) onlyOperator public {
+    function onReceive(address payable _buyer, address _token, uint256 _value, bytes memory _txId) onlyOperator public {
         require(_token != address(0));
         emit ExternalTx(_txId);
         _purchase(_buyer, _token, _value);
+    }
+
+    function _processChange(address payable _beneficiary, address _token, uint _change) internal {
+        super._processChange(_beneficiary, _token, _change);
+        if (_token == address(1) || _token == address(2) || _token == address(3) || _token == address(4)) {
+            emit Change(_token, _change);
+        }
     }
 }

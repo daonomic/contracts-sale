@@ -16,7 +16,7 @@ import "./Events.sol";
  * The internal interface conforms the extensible and modifiable surface of crowdsales. Override
  * the methods to add functionality. Consider using 'super' where appropriate to concatenate
  * behavior.
- * This contract is based on openzeppeling Crowdsale contract
+ * This contract is based on openzeppelin Crowdsale contract
  */
 contract Sale is Ownable, Events {
     using SafeMath for uint256;
@@ -25,7 +25,7 @@ contract Sale is Ownable, Events {
         _purchase(msg.sender, address(0), msg.value);
     }
 
-    function buyTokens(address _beneficiary) external payable {
+    function buyTokens(address payable _beneficiary) external payable {
         _purchase(_beneficiary, address(0), msg.value);
     }
 
@@ -35,15 +35,24 @@ contract Sale is Ownable, Events {
      * @param _token Token paid
      * @param _value value paid
      */
-    function _purchase(address _beneficiary, address _token, uint _value) internal {
+    function _purchase(address payable _beneficiary, address _token, uint _value) internal {
         _preValidatePurchase(_beneficiary, _token, _value);
-        (uint purchased, ) = _getPurchasedAmount(_beneficiary, _token, _value);
+        (uint purchased, uint change) = _getPurchasedAmount(_beneficiary, _token, _value);
         require(purchased > 0);
         uint bonus = _getBonus(_beneficiary, purchased);
         _deliver(_beneficiary, purchased + bonus);
         emit Purchase(_beneficiary, _token, _value, purchased, bonus);
         _updateState(_beneficiary, _token, _value, purchased, bonus);
         _postValidatePurchase(_beneficiary, _token, _value, purchased, bonus);
+        if (change > 0) {
+            _processChange(_beneficiary, _token, change);
+        }
+    }
+
+    function _processChange(address payable _beneficiary, address _token, uint _change) internal {
+        if (_token == address(0)) {
+            _beneficiary.transfer(_change);
+        }
     }
 
     function _preValidatePurchase(address _beneficiary, address /*_token*/, uint _value) view internal {
