@@ -20,7 +20,6 @@ import "./Events.sol";
  */
 contract Sale is Ownable, Events {
     using SafeMath for uint256;
-    using SafeERC20 for IERC20;
 
     function () external payable {
         _purchase(msg.sender, address(0), msg.value);
@@ -28,11 +27,6 @@ contract Sale is Ownable, Events {
 
     function buyTokens(address _beneficiary) external payable {
         _purchase(_beneficiary, address(0), msg.value);
-    }
-
-    function receiveERC20(address _beneficiary, IERC20 _token, uint256 _value) external {
-        _token.safeTransferFrom(msg.sender, address(this), _value);
-        _purchase(_beneficiary, address(_token), _value);
     }
 
     /**
@@ -75,9 +69,5 @@ contract Sale is Ownable, Events {
 
     function withdrawEth(address payable _to, uint _value) public onlyOwner {
         _to.transfer(_value);
-    }
-
-    function withdrawToken(IERC20 _token, address _to, uint _value) public onlyOwner {
-        _token.safeTransfer(_to, _value);
     }
 }
