@@ -18,7 +18,6 @@ import "./Events.sol";
  * behavior.
  * This contract is based on openzeppeling Crowdsale contract
  */
-//todo change
 contract Sale is Ownable, Events {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
@@ -45,6 +44,7 @@ contract Sale is Ownable, Events {
     function _purchase(address _beneficiary, address _token, uint _value) internal {
         _preValidatePurchase(_beneficiary, _token, _value);
         (uint purchased, ) = _getPurchasedAmount(_beneficiary, _token, _value);
+        require(purchased > 0);
         uint bonus = _getBonus(_beneficiary, purchased);
         _deliver(_beneficiary, purchased + bonus);
         emit Purchase(_beneficiary, _token, _value, purchased, bonus);
