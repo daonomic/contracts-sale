@@ -15,8 +15,6 @@ contract PriceBasedCappedSale is Ownable, PriceBasedSale, Sale {
 
     function _getCapLeft() internal view returns (uint);
 
-    function getPrice(address _token, uint  _value) view public returns (uint price);
-
     function _getPurchasedAmount(address _beneficiary, address _token, uint _value) internal returns (uint amount, uint change) {
         uint price = getPrice(_token, _value);
         if (price == 0) {
