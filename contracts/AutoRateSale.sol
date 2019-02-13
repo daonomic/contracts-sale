@@ -2,9 +2,10 @@ pragma solidity ^0.5.0;
 
 
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "./PriceBasedSale.sol";
 
 
-contract AutoRateSale {
+contract AutoRateSale is PriceBasedSale {
     using SafeMath for uint;
 
     function _getBasePrice() view internal returns (address token, uint price);

@@ -7,7 +7,7 @@ import "../../contracts/MintingSale.sol";
 import "../../contracts/RatesChangingSale.sol";
 
 
-contract SimpleSidechainSale is SidechainSale, MintingSale, RatesChangingSale {
+contract SimpleSidechainSale is Ownable, UiEvents, PaymentMethods, SidechainSale, MintingSale, RatesChangingSale {
 
     constructor(ERC20Mintable _token) MintingSale(_token) public {
 

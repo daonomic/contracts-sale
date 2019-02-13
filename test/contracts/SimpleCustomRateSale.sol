@@ -1,11 +1,11 @@
 pragma solidity ^0.5.0;
 
-import "../../contracts/PriceBasedSale.sol";
 import "../../contracts/MintingSale.sol";
 import "../../contracts/SidechainSale.sol";
 import "../../contracts/CustomRateSale.sol";
+import "../../contracts/PriceBasedNotCappedSale.sol";
 
-contract SimpleCustomRateSale is Ownable, PriceBasedSale, MintingSale, SidechainSale, CustomRateSale {
+contract SimpleCustomRateSale is Ownable, PriceBasedNotCappedSale, MintingSale, SidechainSale, CustomRateSale {
 
     constructor(ERC20Mintable token) MintingSale(token) public {
     }
