@@ -4,7 +4,7 @@ import "../../contracts/MintingSale.sol";
 import "../../contracts/SidechainSale.sol";
 import "../../contracts/PriceBasedCappedSale.sol";
 
-contract SimplePriceBasedCappedSale is PriceBasedCappedSale, MintingSale, SidechainSale {
+contract SimplePriceBasedCappedSale is PriceBasedSale, PriceBasedCappedSale, MintingSale, SidechainSale {
 
     constructor(ERC20Mintable token) MintingSale(token) public {
     }

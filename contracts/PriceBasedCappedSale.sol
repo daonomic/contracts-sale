@@ -1,12 +1,15 @@
 pragma solidity ^0.5.0;
 
 
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./Decimals.sol";
 import "./PriceBasedSale.sol";
+import "./Sale.sol";
 
 
-contract PriceBasedCappedSale is PriceBasedSale {
+contract PriceBasedCappedSale is Ownable, PriceBasedSale, Sale {
     using Decimals for address;
+    using SafeMath for uint;
 
     function _getTokenDecimals() internal pure returns (uint);
 

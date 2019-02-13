@@ -1,6 +1,6 @@
 {
   "name": "@daonomic/sale",
-  "version": "0.3.27",
+  "version": "0.3.28",
   "description": "Sale contracts for Daonomic platform",
   "main": "truffle.js",
   "directories": {

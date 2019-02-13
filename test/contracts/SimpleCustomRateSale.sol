@@ -5,7 +5,7 @@ import "../../contracts/SidechainSale.sol";
 import "../../contracts/CustomRateSale.sol";
 import "../../contracts/PriceBasedNotCappedSale.sol";
 
-contract SimpleCustomRateSale is Ownable, PriceBasedNotCappedSale, MintingSale, SidechainSale, CustomRateSale {
+contract SimpleCustomRateSale is Ownable, PriceBasedSale, PriceBasedNotCappedSale, MintingSale, SidechainSale, CustomRateSale {
 
     constructor(ERC20Mintable token) MintingSale(token) public {
     }
