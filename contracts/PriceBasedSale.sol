@@ -17,8 +17,8 @@ contract PriceBasedSale is Sale {
         if (price == 0) {
             return (0, 0);
         }
-        uint realValue = uint(10 ** 18).mul(_value.div(_token.mult()));
-        amount = (10 ** _getTokenDecimals()).mul(realValue.div(price));
+        uint realValue = uint(10 ** 18).mul(_value).div(_token.mult());
+        amount = (10 ** _getTokenDecimals()).mul(realValue).div(price);
         change = 0;
     }
 

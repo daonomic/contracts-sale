@@ -40,6 +40,18 @@ contract('PriceBasedSale', accounts => {
     assertEq(await token.balanceOf(accounts[0]), tokens(10))
   });
 
+  it("should sell 10 wei tokens for 1 wei ETH", async () => {
+    var tx = await sale.sendTransaction({value: 1});
+    console.log(tx.receipt.gasUsed);
+    assertEq(await token.balanceOf(accounts[0]), 10);
+  });
+
+  it("should sell 10000000000000000000 tokens for 1000000000000000000 ETH", async () => {
+    var tx = await sale.sendTransaction({value: tokens(tokens(1))});
+    console.log(tx.receipt.gasUsed);
+    assertEq(await token.balanceOf(accounts[0]), tokens(tokens(10)))
+  });
+
   it("should sell 1000 tokens for 1 BTC", async () => {
     var tx = await sale.onReceive(accounts[1], "0x0000000000000000000000000000000000000002", "100000000", "0xffffff", {from: accounts[9]});
     console.log(tx.receipt.gasUsed);
