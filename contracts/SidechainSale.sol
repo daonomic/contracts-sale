@@ -5,7 +5,7 @@ import "./Sale.sol";
 import "./UiEvents.sol";
 import "./PaymentMethods.sol";
 
-contract SidechainSale is UiEvents, PaymentMethods, OperatorRole, Sale {
+contract SidechainSale is Ownable, UiEvents, PaymentMethods, OperatorRole, Sale {
     event XPubChange(address token, string xpub);
     event Change(address token, uint value);
 
