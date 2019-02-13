@@ -13,12 +13,12 @@ contract PriceBasedSale is Sale {
     function getPrice(address _token, uint  _value) view public returns (uint price);
 
     function _getPurchasedAmount(address _beneficiary, address _token, uint _value) internal returns (uint amount, uint change) {
-        uint price = getPrice(_token, _value);//для BTC = 0.00002 * 10 ** 18
+        uint price = getPrice(_token, _value);
         if (price == 0) {
             return (0, 0);
         }
-        uint realValue = uint(10 ** 18).mul(_value.div(_token.mult()));//1 BTC = 1 * 10 ** 18
-        amount = (10 ** _getTokenDecimals()).mul(realValue.div(price));//10 ** 18 * 1 * 10 ** 18 / 0.00002 * 10 ** 18
+        uint realValue = uint(10 ** 18).mul(_value.div(_token.mult()));
+        amount = (10 ** _getTokenDecimals()).mul(realValue.div(price));
         change = 0;
     }
 
