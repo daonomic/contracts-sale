@@ -52,7 +52,7 @@ contract('FixedPools', accounts => {
         holder.release({from: accounts[1]})
     );
 
-    await sleep(1500);
+    await sleep(2000);
     var tx2 = await holder.release({from: accounts[1]});
     console.log(tx2.receipt.gasUsed);
 

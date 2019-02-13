@@ -3,8 +3,9 @@ pragma solidity ^0.5.0;
 import "@daonomic/lib/contracts/roles/OperatorRole.sol";
 import "./Sale.sol";
 import "./UiEvents.sol";
+import "./PaymentMethods.sol";
 
-contract SidechainSale is UiEvents, OperatorRole, Sale {
+contract SidechainSale is UiEvents, PaymentMethods, OperatorRole, Sale {
     event XPubChange(address token, string xpub);
     event Change(address token, uint value);
 
@@ -31,7 +32,7 @@ contract SidechainSale is UiEvents, OperatorRole, Sale {
 
     function _processChange(address payable _beneficiary, address _token, uint _change) internal {
         super._processChange(_beneficiary, _token, _change);
-        if (_token == address(1) || _token == address(2) || _token == address(3) || _token == address(4)) {
+        if (_token == USD || _token == BTC || _token == LTC || _token == BCH) {
             emit Change(_token, _change);
         }
     }
