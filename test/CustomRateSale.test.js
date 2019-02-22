@@ -29,25 +29,25 @@ contract('CustomRateSale', accounts => {
 
     await token.addMinter(sale.address);
     await sale.addOperator(accounts[9]);
-    await sale.setConversionRate("0x0000000000000000000000000000000000000000", "0x0000000000000000000000000000000000000001", tokens(100));
+    await sale.setConversionRate("0x0000000000000000000000000000000000000000", "0x0000000000000000000000000000000000000001", tokens(120));
   });
 
-  it("should sell 1000 tokens for 1 ETH", async () => {
+  it("should sell 1100 tokens for 1 ETH", async () => {
     var tx = await sale.sendTransaction({value: tokens(1)});
     console.log(tx.receipt.gasUsed);
-    assertEq(await token.balanceOf(accounts[0]), tokens(1000))
+    assertEq(await token.balanceOf(accounts[0]), tokens(1200))
   });
 
-  it("should sell 1000 * 10**18 tokens for 1 ETH", async () => {
+  it("should sell 1200 * 10**18 tokens for 1 * 10**18 ETH", async () => {
     var tx = await sale.sendTransaction({value: tokens(tokens(1))});
     console.log(tx.receipt.gasUsed);
-    assertEq(await token.balanceOf(accounts[0]), tokens(tokens(1000)))
+    assertEq(await token.balanceOf(accounts[0]), tokens(tokens(1200)))
   });
 
-  it("should sell 1000 wei of tokens for 1 wei", async () => {
+  it("should sell 1200 wei of tokens for 1 wei", async () => {
     var tx = await sale.sendTransaction({value: 1});
     console.log(tx.receipt.gasUsed);
-    assertEq(await token.balanceOf(accounts[0]), 1000);
+    assertEq(await token.balanceOf(accounts[0]), 1200);
   });
 
   it("should not sell for BTC if conversion rate not set", async () => {
