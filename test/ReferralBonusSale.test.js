@@ -58,11 +58,11 @@ contract('ReferralBonusCrowdsale', accounts => {
 
     var bonuses = tests.findLog(tx, "Bonus");
     assert.equal(bonuses.length, 2);
-    assert.equal(bonuses[0].args.amount, 100);
-    assert.equal(bonuses[0].args.beneficiary, accounts[2]);
-    assert.equal(bonuses[0].args.bonusType, 2);
-    assert.equal(bonuses[1].args.amount, 50);
-    assert.equal(bonuses[1].args.beneficiary, accounts[1]);
-    assert.equal(bonuses[1].args.bonusType, 3);
+    assert.equal(bonuses[0].args.amount, 50);
+    assert.equal(bonuses[0].args.beneficiary, accounts[1]);
+    assert.equal(bonuses[0].args.bonusType, 3);
+    assert.equal(bonuses[1].args.amount, 100);
+    assert.equal(bonuses[1].args.beneficiary, accounts[2]);
+    assert.equal(bonuses[1].args.bonusType, 2);
   });
 });

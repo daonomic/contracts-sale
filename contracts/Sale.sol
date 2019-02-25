@@ -21,7 +21,17 @@ import "./Events.sol";
 contract Sale is Ownable, Events {
     using SafeMath for uint256;
 
-    function () external payable {
+    struct ExtraBonus {
+        address beneficiary;
+        BonusItem[] items;
+    }
+
+    struct BonusItem {
+        uint amount;
+        BonusType bonusType;
+    }
+
+    function() external payable {
         _purchase(msg.sender, address(0), msg.value);
     }
 
@@ -39,14 +49,35 @@ contract Sale is Ownable, Events {
         _preValidatePurchase(_beneficiary, _token, _value);
         (uint purchased, uint change) = _getPurchasedAmount(_beneficiary, _token, _value);
         require(purchased > 0);
-        uint bonus = _getBonus(_beneficiary, purchased);
+        (BonusItem[] memory bonuses, ExtraBonus[] memory extraBonuses) = _getBonuses(_beneficiary, purchased);
+        uint bonus = _calculateAndEmitBonusEvents(_beneficiary, bonuses);
         _deliver(_beneficiary, purchased + bonus);
         emit Purchase(_beneficiary, _token, _value, purchased, bonus);
-        _updateState(_beneficiary, _token, _value, purchased, bonus);
-        _postValidatePurchase(_beneficiary, _token, _value, purchased, bonus);
+        uint extraBonus = _deliverExtraBonuses(extraBonuses);
+        _updateState(_beneficiary, _token, _value, purchased, bonus, extraBonus);
+        _postValidatePurchase(_beneficiary, _token, _value, purchased, bonus, extraBonus);
         if (change > 0) {
             _processChange(_beneficiary, _token, change);
         }
+    }
+
+    function _deliverExtraBonuses(ExtraBonus[] memory extraBonuses) internal returns (uint extraBonus) {
+        for (uint i = 0; i < extraBonuses.length; i++) {
+            ExtraBonus memory bonus = extraBonuses[i];
+            uint amount = _calculateAndEmitBonusEvents(bonus.beneficiary, bonus.items);
+            _deliver(bonus.beneficiary, amount);
+            extraBonus += amount;
+        }
+    }
+
+    function _calculateAndEmitBonusEvents(address _beneficiary, BonusItem[] memory items) internal returns (uint) {
+        uint result = 0;
+        for (uint i = 0; i < items.length; i++) {
+            BonusItem memory item = items[i];
+            emit Bonus(_beneficiary, item.amount, item.bonusType);
+            result += item.amount;
+        }
+        return result;
     }
 
     function _processChange(address payable _beneficiary, address _token, uint _change) internal {
@@ -62,17 +93,17 @@ contract Sale is Ownable, Events {
 
     function _getPurchasedAmount(address _beneficiary, address _token, uint _value) internal returns (uint amount, uint change);
 
-    function _getBonus(address _beneficiary, uint _amount) internal returns (uint) {
-        return 0;
+    function _getBonuses(address _beneficiary, uint _amount) internal view returns (BonusItem[] memory main, ExtraBonus[] memory extra) {
+        return (new BonusItem[](0), new ExtraBonus[](0));
     }
 
     function _deliver(address _beneficiary, uint _amount) internal;
 
-    function _updateState(address _beneficiary, address _token, uint _value, uint _purchased, uint _bonus) internal {
+    function _updateState(address _beneficiary, address _token, uint _value, uint _purchased, uint _bonus, uint _extraBonus) internal {
 
     }
 
-    function _postValidatePurchase(address _beneficiary, address _token, uint _value, uint _purchased, uint _bonus) internal {
+    function _postValidatePurchase(address _beneficiary, address _token, uint _value, uint _purchased, uint _bonus, uint _extraBonus) internal {
 
     }
 

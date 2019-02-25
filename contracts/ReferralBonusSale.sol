@@ -3,8 +3,9 @@ pragma solidity ^0.5.0;
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./ReferrerProvider.sol";
 import "./Sale.sol";
+import "./HasBonusSale.sol";
 
-contract ReferralBonusSale is Sale {
+contract ReferralBonusSale is Sale, HasBonusSale {
 
     uint public referrerBonus;
     uint public refereeBonus;
@@ -16,18 +17,15 @@ contract ReferralBonusSale is Sale {
 
     function _getReferrer(address account) internal view returns (address referrer);
 
-    function _getBonus(address _beneficiary, uint _amount) internal returns (uint) {
+    function _getBonuses(address _beneficiary, uint _amount) internal view returns (BonusItem[] memory main, ExtraBonus[] memory extra) {
+        (main, extra) = super._getBonuses(_beneficiary, _amount);
         address referrer = _getReferrer(_beneficiary);
         if (referrer != address(0) && referrer != address(1)) {
             uint realReferrerBonus = _amount.mul(referrerBonus).div(1000);
-            emit Bonus(referrer, realReferrerBonus, BonusType.REFERRER);
-            _deliver(referrer, realReferrerBonus);
-
             uint realRefereeBonus = _amount.mul(refereeBonus).div(1000);
-            emit Bonus(_beneficiary, realRefereeBonus, BonusType.REFEREE);
-            return realRefereeBonus;
+            return (_addOneBonus(main, realRefereeBonus, BonusType.REFEREE), _addOneExtraBonus(extra, referrer, _createOneBonus(realReferrerBonus, BonusType.REFERRER)));
         } else {
-            return 0;
+            return (main, extra);
         }
     }
 
