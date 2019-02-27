@@ -20,7 +20,7 @@ contract ReferrerProvider is Whitelist {
     }
 }
 
-contract ReferrerProviderImpl is ReferrerProvider, WhitelistAdminRole {
+contract ReferrerProviderImpl is Ownable, ReferrerProvider, WhitelistAdminRole {
     mapping(address => address) public referrers;
 
     function getReferrer(address _address) public view returns (address referrer) {
