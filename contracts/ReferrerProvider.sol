@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 
-import "@daonomic/lib/contracts/roles/WhitelistAdminRole.sol";
+import "@daonomic/lib/contracts/roles/OwnableWhitelistAdminRole.sol";
 import "./Whitelist.sol";
 
 
@@ -20,7 +20,7 @@ contract ReferrerProvider is Whitelist {
     }
 }
 
-contract ReferrerProviderImpl is Ownable, ReferrerProvider, WhitelistAdminRole {
+contract ReferrerProviderImpl is Ownable, ReferrerProvider, OwnableWhitelistAdminRole {
     mapping(address => address) public referrers;
 
     function getReferrer(address _address) public view returns (address referrer) {

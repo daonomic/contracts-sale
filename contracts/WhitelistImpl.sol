@@ -1,11 +1,11 @@
 pragma solidity ^0.5.0;
 
 
-import "@daonomic/lib/contracts/roles/WhitelistAdminRole.sol";
+import "@daonomic/lib/contracts/roles/OwnableWhitelistAdminRole.sol";
 import "./Whitelist.sol";
 
 
-contract WhitelistImpl is WhitelistAdminRole, Whitelist {
+contract WhitelistImpl is Ownable, OwnableWhitelistAdminRole, Whitelist {
     mapping(address => bool) public whitelist;
 
     function isWhitelisted(address account) public view returns (bool) {
