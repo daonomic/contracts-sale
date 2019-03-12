@@ -54,10 +54,18 @@ contract('Pools', accounts => {
         holder.release({from: accounts[1]})
     );
 
+    assert.equal(await holder.getTotalAmount(), 1000);
+    assert.equal(await holder.getReleasedAmount(), 0);
+    assert.equal(await holder.getVestedAmount(), 0);
+
     await sleep(2000);
+    assert.equal(await holder.getVestedAmount(), 1000);
+    assert.equal(await holder.getReleasedAmount(), 0);
     var tx2 = await holder.release({from: accounts[1]});
     console.log(tx2.receipt.gasUsed);
 
+    assert.equal(await holder.getVestedAmount(), 1000);
+    assert.equal(await holder.getReleasedAmount(), 1000);
     assert.equal(await token.balanceOf(accounts[1]), 1000);
   });
 
