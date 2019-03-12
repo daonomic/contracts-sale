@@ -5,7 +5,7 @@ import "./ReferrerProvider.sol";
 import "./Sale.sol";
 import "./HasBonusSale.sol";
 
-contract ReferralBonusSale is Sale, HasBonusSale {
+contract ReferralBonusSale is Ownable, Events, Sale, HasBonusSale {
 
     uint public referrerBonus;
     uint public refereeBonus;

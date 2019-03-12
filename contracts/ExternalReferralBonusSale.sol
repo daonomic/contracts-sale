@@ -3,7 +3,7 @@ pragma solidity ^0.5.0;
 import "./Sale.sol";
 import "./ReferralBonusSale.sol";
 
-contract ExternalReferralBonusSale is ReferralBonusSale {
+contract ExternalReferralBonusSale is Ownable, Events, ReferralBonusSale {
 
     ReferrerProvider public referrerProvider;
 

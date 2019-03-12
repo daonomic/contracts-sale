@@ -6,7 +6,7 @@ import "./WhitelistSale.sol";
 import "./ReferralBonusSale.sol";
 
 
-contract InternalWhitelistReferralBonusSale is ReferrerProviderImpl, WhitelistSale, ReferralBonusSale {
+contract InternalWhitelistReferralBonusSale is Ownable, Events, ReferrerProvider, ReferrerProviderImpl, WhitelistSale, ReferralBonusSale {
 
     constructor(uint _referrerBonus, uint _refereeBonus) ReferralBonusSale(_referrerBonus, _refereeBonus) public {
 

@@ -5,7 +5,7 @@ import "openzeppelin-solidity/contracts/token/ERC20/ERC20Mintable.sol";
 import "./Sale.sol";
 
 
-contract MintingSale is Ownable, Sale {
+contract MintingSale is Ownable, Events, Sale {
 
     ERC20Mintable public token;
 

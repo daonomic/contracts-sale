@@ -4,7 +4,7 @@ pragma solidity ^0.5.0;
 import "./CountingTotalSale.sol";
 
 
-contract CappedSale is CountingTotalSale {
+contract CappedSale is Ownable, Events, Sale, CountingTotalSale {
     uint public cap;
 
     constructor(uint _cap) public {

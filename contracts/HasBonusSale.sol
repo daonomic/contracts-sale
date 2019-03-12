@@ -4,7 +4,7 @@ pragma solidity ^0.5.0;
 import "./Sale.sol";
 
 
-contract HasBonusSale is Sale {
+contract HasBonusSale is Ownable, Events, Sale {
 
     function getBonus(address _beneficiary, uint _amount) public view returns (uint result) {
         (BonusItem[] memory bonuses,) = _getBonuses(_beneficiary, _amount);

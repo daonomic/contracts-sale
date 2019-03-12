@@ -7,7 +7,7 @@ import "./Decimals.sol";
 import "./Conversions.sol";
 
 
-contract AutoRateNotCappedSale is Ownable, Conversions, Sale {
+contract AutoRateNotCappedSale is Ownable, Events, Conversions, Sale {
     using Decimals for address;
 
     function _getTokenDecimals() internal pure returns (uint);

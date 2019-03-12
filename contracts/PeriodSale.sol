@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 import "./Sale.sol";
 
-contract PeriodSale is Sale {
+contract PeriodSale is Ownable, Events, Sale {
     uint256 public start;
     uint256 public end;
 

@@ -4,7 +4,7 @@ import "./Sale.sol";
 import "./Whitelist.sol";
 import "./WhitelistSale.sol";
 
-contract ExternalWhitelistSale is WhitelistSale {
+contract ExternalWhitelistSale is Ownable, Events, Sale, WhitelistSale {
 
     Whitelist public whitelist;
 

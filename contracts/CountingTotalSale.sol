@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 import "./Sale.sol";
 
-contract CountingTotalSale is Sale {
+contract CountingTotalSale is Ownable, Events, Sale {
     uint public purchasedTotal;
     uint public bonusTotal;
 

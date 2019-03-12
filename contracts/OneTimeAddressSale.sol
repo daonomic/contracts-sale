@@ -6,7 +6,7 @@ import "./Sale.sol";
 import "./UiEvents.sol";
 
 
-contract OneTimeAddressSale is UiEvents, SignerRole, Sale {
+contract OneTimeAddressSale is Ownable, Events, UiEvents, SignerRole, Sale {
 
     function buyTokensSigned(address payable _buyer, bytes memory _txId, uint _value, uint8 _v, bytes32 _r, bytes32 _s) payable public {
         bytes32 hash = keccak256(abi.encodePacked(_value, msg.sender));

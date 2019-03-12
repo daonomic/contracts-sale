@@ -6,7 +6,7 @@ import "./Sale.sol";
 import "./UiEvents.sol";
 
 
-contract RatesChangingSale is Ownable, UiEvents, Sale {
+contract RatesChangingSale is Ownable, Events, UiEvents, Sale {
     mapping(address => uint) public rates;
 
     struct Rate {

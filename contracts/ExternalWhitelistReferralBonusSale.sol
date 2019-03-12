@@ -6,7 +6,7 @@ import "./WhitelistSale.sol";
 import "./ReferralBonusSale.sol";
 
 
-contract ExternalWhitelistReferralBonusSale is WhitelistSale, ReferralBonusSale {
+contract ExternalWhitelistReferralBonusSale is Ownable, Events, WhitelistSale, ReferralBonusSale {
 
     ReferrerProvider public referrerProvider;
 

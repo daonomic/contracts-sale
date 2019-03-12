@@ -5,7 +5,7 @@ import "./WhitelistImpl.sol";
 import "./Sale.sol";
 
 
-contract WhitelistSale is Sale {
+contract WhitelistSale is Ownable, Events, Sale {
 
     function getWhitelists() public view returns (address[] memory);
 

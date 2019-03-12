@@ -5,7 +5,7 @@ import "./Sale.sol";
 import "./PaymentMethods.sol";
 
 
-contract ERC20Sale is Sale, PaymentMethods {
+contract ERC20Sale is Ownable, Events, PaymentMethods, Sale {
     using SafeERC20 for IERC20;
 
     function receiveERC20(address payable _beneficiary, IERC20 _token, uint256 _value) external {
