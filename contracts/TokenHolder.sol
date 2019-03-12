@@ -14,8 +14,9 @@ contract TokenHolder {
 
     TokenHolderLib.Holder private holder;
 
-    constructor(IERC20 token, address beneficiary, uint256 releaseTime) public {
-        holder = TokenHolderLib.Holder(token, beneficiary, releaseTime);
+    constructor(IERC20 token, address beneficiary, uint256 releaseTime, uint256 amount) public {
+        require(amount > 0);
+        holder = TokenHolderLib.Holder(token, beneficiary, releaseTime, amount);
     }
 
     /**
@@ -23,5 +24,17 @@ contract TokenHolder {
      */
     function release() public {
         holder.release();
+    }
+
+    function getTotalAmount() view public returns (uint) {
+        return holder.total;
+    }
+
+    function getVestedAmount() view public returns (uint) {
+        return holder.getVestedAmount();
+    }
+
+    function getReleasedAmount() view public returns (uint) {
+        return holder.getReleasedAmount();
     }
 }
