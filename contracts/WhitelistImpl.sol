@@ -28,10 +28,6 @@ contract WhitelistImpl is Ownable, OwnableWhitelistAdminRole, Whitelist {
         _setWhitelisted(account, whitelisted);
     }
 
-    function setWhitelist(address account, bool whitelisted) public onlyWhitelistAdmin {
-        _setWhitelisted(account, whitelisted);
-    }
-
     function _setWhitelisted(address account, bool whitelisted) internal {
         whitelist[account] = whitelisted;
         emit WhitelistChange(account, whitelisted);
