@@ -42,10 +42,11 @@ contract Pools is Ownable, AbstractPools {
         }
         if (now >= releaseTime) {
             require(token.mint(_beneficiary, _amount));
+            emit DirectTransferEvent(_name, _beneficiary, _amount);
         } else {
             TokenHolder created = new TokenHolder(token, _beneficiary, releaseTime, _amount);
             require(token.mint(address(created), _amount));
-            emit TokenHolderCreatedEvent(_name, address(created), _amount);
+            emit TokenHolderCreatedEvent(_name, address(created), _beneficiary, _amount);
         }
     }
 

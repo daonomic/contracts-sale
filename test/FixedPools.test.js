@@ -46,7 +46,7 @@ contract('FixedPools', accounts => {
     console.log(tx.receipt.gasUsed);
 
     var event = tests.findLog(tx, "TokenHolderCreatedEvent");
-    var holder = await TokenHolder.at(event.args.addr);
+    var holder = await TokenHolder.at(event.args.holder);
 
     await expectThrow(
         holder.release({from: accounts[1]})

@@ -23,5 +23,6 @@ contract AbstractPools {
     enum ReleaseType { Fixed, Floating, Direct }
 
     event PoolCreatedEvent(string name, uint maxAmount, uint releaseTime, ReleaseType releaseType);
-    event TokenHolderCreatedEvent(string name, address addr, uint amount);
+    event TokenHolderCreatedEvent(string name, address holder, address beneficiary, uint amount);
+    event DirectTransferEvent(string name, address beneficiary, uint amount);
 }

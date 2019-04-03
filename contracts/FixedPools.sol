@@ -46,10 +46,11 @@ contract FixedPools is Ownable, AbstractPools {
         }
         if (now >= releaseTime) {
             require(token.mint(_beneficiary, _amount));
+            emit DirectTransferEvent(_name, _beneficiary, _amount);
         } else {
             require(token.mint(address(this), _amount));
             amounts[_name][_beneficiary] += _amount;
-            emit TokenHolderCreatedEvent(_name, address(this), _amount);
+            emit TokenHolderCreatedEvent(_name, address(this), _beneficiary, _amount);
         }
     }
 
