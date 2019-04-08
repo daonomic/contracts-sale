@@ -7,7 +7,7 @@ import "./Sale.sol";
 
 contract WhitelistSale is Ownable, Events, Sale {
 
-    function getWhitelists() public view returns (address[] memory);
+    function getWhitelist() public view returns (address);
 
     function _isWhitelisted(address account) internal view returns (bool);
 

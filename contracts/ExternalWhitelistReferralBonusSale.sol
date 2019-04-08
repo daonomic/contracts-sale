@@ -22,9 +22,7 @@ contract ExternalWhitelistReferralBonusSale is Ownable, Events, WhitelistSale, R
         return referrerProvider.isWhitelisted(account);
     }
 
-    function getWhitelists() public view returns (address[] memory) {
-        address[] memory result = new address[](1);
-        result[0] = address(referrerProvider);
-        return result;
+    function getWhitelist() public view returns (address) {
+        return address(referrerProvider);
     }
 }

@@ -27,9 +27,7 @@ contract InternalWhitelistReferralBonusSale is Ownable, Events, ReferrerProvider
         _setReferrer(_address, _referrer);
     }
 
-    function getWhitelists() public view returns (address[] memory) {
-        address[] memory result = new address[](1);
-        result[0] = address(this);
-        return result;
+    function getWhitelist() public view returns (address) {
+        return address(this);
     }
 }

@@ -20,9 +20,7 @@ contract ExternalWhitelistSale is Ownable, Events, Sale, WhitelistSale {
         whitelist = _whitelist;
     }
 
-    function getWhitelists() public view returns (address[] memory) {
-        address[] memory result = new address[](1);
-        result[0] = address(whitelist);
-        return result;
+    function getWhitelist() public view returns (address) {
+        return address(whitelist);
     }
 }
