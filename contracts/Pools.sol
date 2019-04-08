@@ -22,9 +22,6 @@ contract Pools is Ownable, AbstractPools {
         if (_releaseType == ReleaseType.Direct) {
             require(_releaseTime == 0, "release time should be 0 for ReleaseType.Direct");
         }
-        if (_releaseTime == 0) {
-            require(_releaseType == ReleaseType.Direct, "release time can be 0 only for ReleaseType.Direct");
-        }
         pools[_name] = PoolDescription(_maxAmount, 0, _releaseTime, _releaseType);
         emit PoolCreatedEvent(_name, _maxAmount, _releaseTime, _releaseType);
     }
