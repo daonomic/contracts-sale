@@ -40,7 +40,7 @@ contract Pools is Ownable, AbstractPools {
         } else {
             releaseTime = now.add(pool.releaseTime);
         }
-        if (now >= releaseTime) {
+        if (now > releaseTime || pool.releaseType == ReleaseType.Direct) {
             require(token.mint(_beneficiary, _amount));
             emit DirectTransferEvent(_name, _beneficiary, _amount);
         } else {

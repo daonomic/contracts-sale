@@ -10,6 +10,8 @@ import "./AbstractPools.sol";
 contract FixedPools is Ownable, AbstractPools {
     using SafeMath for uint256;
 
+    event ReleasedEvent(address beneficiary, uint amount);
+
     ERC20Mintable public token;
     string[] poolNames;
     mapping(string => PoolDescription) pools;
@@ -68,6 +70,7 @@ contract FixedPools is Ownable, AbstractPools {
         }
         require(amount > 0);
         require(token.transfer(msg.sender, amount));
+        emit ReleasedEvent(msg.sender, amount);
     }
 
     function getTokensLeft(string memory _name) view public returns (uint) {
